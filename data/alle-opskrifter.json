@@ -1,0 +1,130 @@
+
+[
+  {
+    "name": "Cremet kikærtekarry",
+    "description": "En cremet og krydret vegetarisk karry med kikærter, tomat og kokosmælk.",
+    "category": "Asiatisk",
+    "prepTime": 30,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Kikærter", "amount": "2 dåser" },
+      { "name": "Tomat", "amount": "400 g hakkede tomater" },
+      { "name": "Løg", "amount": "1 stk." },
+      { "name": "Hvidløg", "amount": "2 fed" },
+      { "name": "Kokosmælk", "amount": "400 ml" },
+      { "name": "Karry", "amount": "2 spsk." },
+      { "name": "Paprika", "amount": "1 tsk." },
+      { "name": "Ris", "amount": "300 g" }
+    ],
+    "instructions": [
+      "Hak løg og hvidløg fint.",
+      "Svits løg og hvidløg i lidt olie i en gryde.",
+      "Tilsæt karry og paprika, og lad krydderierne stege kort.",
+      "Tilsæt hakkede tomater, kikærter og kokosmælk.",
+      "Lad retten simre i cirka 20 minutter.",
+      "Kog risene efter anvisningen på pakken, og servér dem til karryen."
+    ]
+  },
+  {
+    "name": "Shakshuka med feta",
+    "description": "En vegetarisk ret med æg pocheret i en krydret tomatsauce med løg, hvidløg og paprika.",
+    "category": "Vegetarisk",
+    "prepTime": 25,
+    "servings": 2,
+    "ingredients": [
+      { "name": "Tomat", "amount": "400 g hakkede tomater" },
+      { "name": "Løg", "amount": "1 stk." },
+      { "name": "Hvidløg", "amount": "2 fed" },
+      { "name": "Paprika", "amount": "1 tsk." },
+      { "name": "Æg", "amount": "4 stk." },
+      { "name": "Feta", "amount": "100 g" },
+      { "name": "Spidskommen", "amount": "1 tsk." },
+      { "name": "Brød", "amount": "4 skiver" }
+    ],
+    "instructions": [
+      "Hak løg og hvidløg fint.",
+      "Svits løg og hvidløg i en pande med lidt olie.",
+      "Tilsæt paprika og spidskommen.",
+      "Hæld hakkede tomater på panden, og lad saucen simre i 10 minutter.",
+      "Lav fire små fordybninger i saucen, og slå et æg ud i hver.",
+      "Læg låg på panden, og tilbered æggene, indtil hviderne er faste.",
+      "Smuldr feta over retten, og servér med brød."
+    ]
+  },
+  {
+    "name": "Krydret tomat- og linsesuppe",
+    "description": "En varmende vegetarisk suppe med røde linser, tomat, løg, hvidløg og paprika.",
+    "category": "Suppe",
+    "prepTime": 35,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Røde linser", "amount": "200 g" },
+      { "name": "Tomat", "amount": "400 g hakkede tomater" },
+      { "name": "Løg", "amount": "1 stk." },
+      { "name": "Hvidløg", "amount": "2 fed" },
+      { "name": "Paprika", "amount": "1 tsk." },
+      { "name": "Grøntsagsbouillon", "amount": "1 liter" },
+      { "name": "Gulerod", "amount": "2 stk." },
+      { "name": "Citron", "amount": "1/2 stk." }
+    ],
+    "instructions": [
+      "Hak løg og hvidløg, og skær gulerødderne i små tern.",
+      "Svits løg, hvidløg og gulerødder i en gryde.",
+      "Tilsæt paprika og røde linser.",
+      "Hæld hakkede tomater og grøntsagsbouillon i gryden.",
+      "Lad suppen simre i cirka 25 minutter, indtil linserne er møre.",
+      "Smag til med citronsaft, salt og peber."
+    ]
+  },
+  {
+    "name": "Middelhavspasta med kikærter",
+    "description": "En enkel pastaret med kikærter, tomat, hvidløg, løg og middelhavskrydderier.",
+    "category": "Pasta",
+    "prepTime": 25,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Pasta", "amount": "350 g" },
+      { "name": "Kikærter", "amount": "1 dåse" },
+      { "name": "Tomat", "amount": "400 g hakkede tomater" },
+      { "name": "Løg", "amount": "1 stk." },
+      { "name": "Hvidløg", "amount": "2 fed" },
+      { "name": "Paprika", "amount": "1 tsk." },
+      { "name": "Spinat", "amount": "100 g" },
+      { "name": "Parmesan", "amount": "50 g" }
+    ],
+    "instructions": [
+      "Kog pastaen efter anvisningen på pakken.",
+      "Hak løg og hvidløg fint.",
+      "Svits løg og hvidløg i en pande med lidt olie.",
+      "Tilsæt paprika, hakkede tomater og kikærter.",
+      "Lad saucen simre i 10 minutter.",
+      "Vend spinat og den kogte pasta i saucen.",
+      "Servér med revet parmesan."
+    ]
+  },
+  {
+    "name": "Ovnbagte grøntsager med kikærter og tomat",
+    "description": "En farverig vegetarisk ovnret med kikærter, tomat, løg, hvidløg og krydret paprika.",
+    "category": "Vegetarisk",
+    "prepTime": 40,
+    "servings": 4,
+    "ingredients": [
+      { "name": "Kikærter", "amount": "2 dåser" },
+      { "name": "Tomat", "amount": "250 g cherrytomater" },
+      { "name": "Løg", "amount": "2 stk." },
+      { "name": "Hvidløg", "amount": "3 fed" },
+      { "name": "Paprika", "amount": "2 tsk." },
+      { "name": "Squash", "amount": "1 stk." },
+      { "name": "Rød peberfrugt", "amount": "1 stk." },
+      { "name": "Olivenolie", "amount": "2 spsk." }
+    ],
+    "instructions": [
+      "Forvarm ovnen til 200 grader.",
+      "Skær løg, squash og peberfrugt i mindre stykker.",
+      "Halvér cherrytomaterne, og hak hvidløget.",
+      "Vend grøntsager og kikærter med olivenolie og paprika.",
+      "Fordel blandingen på en bageplade.",
+      "Bag retten i cirka 30 minutter, indtil grøntsagerne er møre."
+    ]
+  }
+]

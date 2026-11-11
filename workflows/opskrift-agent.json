@@ -1,0 +1,211 @@
+{
+  "name": "Opskrift AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "da99afbe-07b3-4a4c-951f-0b3a9bd6f475",
+      "name": "When chat message received",
+      "webhookId": "8e80bdeb-9d0c-44ec-b503-5ae333e6cb24"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "\nDu er en dansk opskriftsassistent, der kun må bruge opskrifter fra Neo4j-databasen.\n\nVIGTIGE REGLER:\n\n1. Du må ALDRIG opfinde opskrifter.\n2. Du må ALDRIG bruge din egen viden til at foreslå opskrifter.\n3. Du må kun præsentere opskrifter, som du har modtaget fra et søgeværktøj.\n4. Du må ikke udfylde manglende oplysninger ved at gætte.\n5. Hvis et søgeværktøj returnerer relevante resultater, skal du bruge dem.\n\nVÆRKTØJER:\n\nvector_search:\nBruges til semantiske søgninger, hvor brugeren beskriver ønsker, smag eller type mad.\n\ngraph_search:\nBruges til konkrete ingredienser og opskriftskategorier.\n\nSØGEREGLER:\n\n- Når brugeren spørger efter bestemte ingredienser, skal du bruge graph_search.\n- Når brugeren beskriver, hvad de har lyst til at spise, skal du bruge vector_search.\n- Du skal altid læse hele søgeresultatet.\n\nBEHANDLING AF VECTOR SEARCH:\n\n- Resultaterne indeholder recipe, description, chunks og score.\n- chunks indeholder opskriftens tekst.\n- Teksten kan indeholde både ingredienser og tilberedning.\n- Du skal bruge alle relevante chunks fra søgeresultatet.\n- Du må ikke opfinde oplysninger, som ikke findes i chunks.\n\nBEHANDLING AF GRAPH SEARCH:\n\n- Du må kun vise ingredienser, som fremgår direkte af søgeresultatet.\n- Du må aldrig tilføje, oversætte eller ændre ingrediensnavne.\n- Du skal medtage alle ingredienser fra søgeresultatet.\n- Hvis søgeresultatet ikke indeholder ingrediensoplysninger, må du ikke gætte.\n\nSVAR:\n\n- Svar altid på dansk.\n- Vis opskriftens navn og beskrivelse.\n- Vis ingredienser og tilberedning, hvis oplysningerne findes i søgeresultatet.\n- Brug kun oplysninger fra søgeresultaterne.\n- Hvis der ikke findes relevante resultater, skal du sige det tydeligt.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "1be2ab66-6b58-48b3-b8de-906720d7f5cc",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:3b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        96,
+        208
+      ],
+      "id": "f05e905f-fa92-4a8c-a360-1a9c073f1001",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "SMP56X7m7v08Qxqw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Søg efter opskrifter ud fra brugerens ønsker og beskrivelser. Brug dette værktøj, når brugeren beskriver en ret, smag eller type mad, de har lyst til.",
+        "workflowId": {
+          "__rl": true,
+          "value": "38CcDmFidsJK282k",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/38CcDmFidsJK282k",
+          "cachedResultName": "Opskrift Vector Search - Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', `Brugerens spørgsmål eller beskrivelse af den type opskrift, de leder efter.`, 'string') }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        208
+      ],
+      "id": "2c7d0d81-2ca0-49ba-9475-03352fc5b2c5",
+      "name": "Call 'Opskrift Vector Search - Agent'"
+    },
+    {
+      "parameters": {
+        "description": "Find opskrifter ud fra konkrete ingredienser og kategorier.\n\nBrug værktøjet, når brugeren spørger efter opskrifter med bestemte ingredienser eller inden for en bestemt kategori.\n\nHvis brugeren nævner både en ingrediens og en kategori, skal begge oplysninger sendes med, så søgningen finder opskrifter, der opfylder begge krav.\n\nHvis brugeren kun nævner en ingrediens, udfyld ingredient og lad category være tom.\n\nHvis brugeren kun nævner en kategori, udfyld category og lad ingredient være tom.",
+        "workflowId": {
+          "__rl": true,
+          "value": "q3uWA16o0MGTkN8X",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/q3uWA16o0MGTkN8X",
+          "cachedResultName": "Opskrift Graph Search - Againt"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ingredient": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ingredient', `Den konkrete ingrediens, som brugeren søger efter. Eksempel: Tomat.`, 'string') }}",
+            "category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('category', `Den opskriftskategori, brugeren søger efter. Eksempel: Vegetarisk, Suppe eller Dessert.`, 'string') }}"
+          },
+          "matchingColumns": [
+            "ingredient"
+          ],
+          "schema": [
+            {
+              "id": "ingredient",
+              "displayName": "ingredient",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        208
+      ],
+      "id": "91705c51-656e-4e93-8576-19fa35d15a90",
+      "name": "Call 'Opskrift Graph Search - Againt'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Opskrift Vector Search - Agent'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Opskrift Graph Search - Againt'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e86338b1-5c62-4573-a448-eb3b01825744",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "916ac3a88594e58f8171e19d990906dac60bc2023cadac5ac404df0bce09df73"
+  },
+  "nodeGroups": [],
+  "id": "NfCZqqCXEGdHzxcc",
+  "tags": []
+}

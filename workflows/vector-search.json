@@ -1,0 +1,161 @@
+{
+  "name": "Opskrift Vector Search - Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "af01e4d1-f6ca-475c-a217-47946003ec22",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "08f10e12-dae9-4b2c-88f7-8688036cb647",
+              "name": "query",
+              "value": "Jeg vil gerne have noget cremet og krydret med kikærter og kokosmælk.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "36bebf90-2658-41e3-8da7-52977701c56c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        256
+      ],
+      "id": "a98c0c80-39f0-4c9c-8b75-5b9f3cc92f19",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/embed",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"nomic-embed-text\",\n  \"input\": \"{{ $json.query }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "70701391-6956-4029-9ea2-cbb3f2e648d2",
+      "name": "Generér Embedding - Ollama"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/neo4j/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\nJSON.stringify({\n  \"statement\": \"CALL db.index.vector.queryNodes('chunk_embedding', 5, $embedding) YIELD node, score MATCH (r:Recipe)-[:HAS_CHUNK]->(node) WITH r, collect(node.text) AS chunks, max(score) AS score RETURN r.name AS recipe, r.description AS description, chunks, score ORDER BY score DESC\",\n  \"parameters\": {\n    \"embedding\": $json.embeddings[0]\n  }\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "c093b6fb-c51f-4d35-8788-112969a1e614",
+      "name": "Søg i vector-index (neo4j)",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "neWwpHfj39OAYLE5",
+          "name": "Neo4j Opskrifter"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Generér Embedding - Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generér Embedding - Ollama": {
+      "main": [
+        [
+          {
+            "node": "Søg i vector-index (neo4j)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Generér Embedding - Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6f443f1a-05a9-4d9c-8cb8-55527f0b8fa6",
+  "meta": {
+    "instanceId": "916ac3a88594e58f8171e19d990906dac60bc2023cadac5ac404df0bce09df73"
+  },
+  "nodeGroups": [],
+  "id": "38CcDmFidsJK282k",
+  "tags": []
+}

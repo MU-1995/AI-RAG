@@ -1,0 +1,141 @@
+{
+  "name": "Opskrift Graph Search - Againt",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "80d6a6fc-081b-4751-afe0-f12970aae566",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a3a27adb-7509-4098-bc53-530ef8c22ee9",
+              "name": "ingredient",
+              "value": "={{ $json.ingredient }}",
+              "type": "string"
+            },
+            {
+              "id": "6a188d70-1f85-4c14-bc25-9690a61f2e16",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b67bc494-e2f8-48d4-a46d-3b99c23434a4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/neo4j/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\nJSON.stringify({\n  \"statement\": \"MATCH (r:Recipe) OPTIONAL MATCH (r)-[:CONTAINS]->(i:Ingredient) WITH r, collect(i.name) AS ingredients OPTIONAL MATCH (r)-[:BELONGS_TO]->(c:Category) WITH r, ingredients, collect(c.name) AS categories WHERE (coalesce($ingredient, '') = '' OR toLower(r.name) CONTAINS toLower($ingredient) OR any(x IN ingredients WHERE toLower(x) CONTAINS toLower($ingredient))) AND (coalesce($category, '') = '' OR any(cat IN categories WHERE toLower(cat) CONTAINS toLower($category))) RETURN r.name AS recipe, r.description AS description, ingredients, categories ORDER BY recipe\",\n  \"parameters\": {\n    \"ingredient\": $json.ingredient,\n    \"category\": $json.category\n  }\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "ff8ce6e7-c6e4-4b34-aef9-9ce57d3083de",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "neWwpHfj39OAYLE5",
+          "name": "Neo4j Opskrifter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "ingredient"
+            },
+            {
+              "name": "category"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        192
+      ],
+      "id": "4d520229-f183-4abe-8a30-031ed68df32f",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "37c4e216-cdad-47a1-8615-90daf044578c",
+  "meta": {
+    "instanceId": "916ac3a88594e58f8171e19d990906dac60bc2023cadac5ac404df0bce09df73"
+  },
+  "nodeGroups": [],
+  "id": "q3uWA16o0MGTkN8X",
+  "tags": []
+}

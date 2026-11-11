@@ -1,0 +1,145 @@
+{
+  "name": "Opskrift Ingestion",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "04f9fa56-301a-48cd-828b-10f09e392ff3",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst recipes = [\n  {\n    name: \"Cremet kikærtekarry\",\n    description: \"En cremet og krydret vegetarisk karry med kikærter, tomat og kokosmælk.\",\n    category: \"Asiatisk\",\n    prepTime: 30,\n    servings: 4,\n    ingredients: [\n      { name: \"Kikærter\", amount: \"2 dåser\" },\n      { name: \"Tomat\", amount: \"400 g hakkede tomater\" },\n      { name: \"Løg\", amount: \"1 stk.\" },\n      { name: \"Hvidløg\", amount: \"2 fed\" },\n      { name: \"Kokosmælk\", amount: \"400 ml\" },\n      { name: \"Karry\", amount: \"2 spsk.\" },\n      { name: \"Paprika\", amount: \"1 tsk.\" },\n      { name: \"Ris\", amount: \"300 g\" }\n    ],\n    instructions: [\n      \"Hak løg og hvidløg fint.\",\n      \"Svits løg og hvidløg i lidt olie i en gryde.\",\n      \"Tilsæt karry og paprika, og lad krydderierne stege kort.\",\n      \"Tilsæt hakkede tomater, kikærter og kokosmælk.\",\n      \"Lad retten simre i cirka 20 minutter.\",\n      \"Kog risene efter anvisningen på pakken, og servér dem til karryen.\"\n    ]\n  },\n  {\n    name: \"Shakshuka med feta\",\n    description: \"En vegetarisk ret med æg pocheret i en krydret tomatsauce med løg, hvidløg og paprika.\",\n    category: \"Vegetarisk\",\n    prepTime: 25,\n    servings: 2,\n    ingredients: [\n      { name: \"Tomat\", amount: \"400 g hakkede tomater\" },\n      { name: \"Løg\", amount: \"1 stk.\" },\n      { name: \"Hvidløg\", amount: \"2 fed\" },\n      { name: \"Paprika\", amount: \"1 tsk.\" },\n      { name: \"Æg\", amount: \"4 stk.\" },\n      { name: \"Feta\", amount: \"100 g\" },\n      { name: \"Spidskommen\", amount: \"1 tsk.\" },\n      { name: \"Brød\", amount: \"4 skiver\" }\n    ],\n    instructions: [\n      \"Hak løg og hvidløg fint.\",\n      \"Svits løg og hvidløg i en pande med lidt olie.\",\n      \"Tilsæt paprika og spidskommen.\",\n      \"Hæld hakkede tomater på panden, og lad saucen simre i 10 minutter.\",\n      \"Lav fire små fordybninger i saucen, og slå et æg ud i hver.\",\n      \"Læg låg på panden, og tilbered æggene, indtil hviderne er faste.\",\n      \"Smuldr feta over retten, og servér med brød.\"\n    ]\n  },\n  {\n    name: \"Krydret tomat- og linsesuppe\",\n    description: \"En varmende vegetarisk suppe med røde linser, tomat, løg, hvidløg og paprika.\",\n    category: \"Suppe\",\n    prepTime: 35,\n    servings: 4,\n    ingredients: [\n      { name: \"Røde linser\", amount: \"200 g\" },\n      { name: \"Tomat\", amount: \"400 g hakkede tomater\" },\n      { name: \"Løg\", amount: \"1 stk.\" },\n      { name: \"Hvidløg\", amount: \"2 fed\" },\n      { name: \"Paprika\", amount: \"1 tsk.\" },\n      { name: \"Grøntsagsbouillon\", amount: \"1 liter\" },\n      { name: \"Gulerod\", amount: \"2 stk.\" },\n      { name: \"Citron\", amount: \"1/2 stk.\" }\n    ],\n    instructions: [\n      \"Hak løg og hvidløg, og skær gulerødderne i små tern.\",\n      \"Svits løg, hvidløg og gulerødder i en gryde.\",\n      \"Tilsæt paprika og røde linser.\",\n      \"Hæld hakkede tomater og grøntsagsbouillon i gryden.\",\n      \"Lad suppen simre i cirka 25 minutter, indtil linserne er møre.\",\n      \"Smag til med citronsaft, salt og peber.\"\n    ]\n  },\n  {\n    name: \"Middelhavspasta med kikærter\",\n    description: \"En enkel pastaret med kikærter, tomat, hvidløg, løg og middelhavskrydderier.\",\n    category: \"Pasta\",\n    prepTime: 25,\n    servings: 4,\n    ingredients: [\n      { name: \"Pasta\", amount: \"350 g\" },\n      { name: \"Kikærter\", amount: \"1 dåse\" },\n      { name: \"Tomat\", amount: \"400 g hakkede tomater\" },\n      { name: \"Løg\", amount: \"1 stk.\" },\n      { name: \"Hvidløg\", amount: \"2 fed\" },\n      { name: \"Paprika\", amount: \"1 tsk.\" },\n      { name: \"Spinat\", amount: \"100 g\" },\n      { name: \"Parmesan\", amount: \"50 g\" }\n    ],\n    instructions: [\n      \"Kog pastaen efter anvisningen på pakken.\",\n      \"Hak løg og hvidløg fint.\",\n      \"Svits løg og hvidløg i en pande med lidt olie.\",\n      \"Tilsæt paprika, hakkede tomater og kikærter.\",\n      \"Lad saucen simre i 10 minutter.\",\n      \"Vend spinat og den kogte pasta i saucen.\",\n      \"Servér med revet parmesan.\"\n    ]\n  },\n  {\n    name: \"Ovnbagte grøntsager med kikærter og tomat\",\n    description: \"En farverig vegetarisk ovnret med kikærter, tomat, løg, hvidløg og krydret paprika.\",\n    category: \"Vegetarisk\",\n    prepTime: 40,\n    servings: 4,\n    ingredients: [\n      { name: \"Kikærter\", amount: \"2 dåser\" },\n      { name: \"Tomat\", amount: \"250 g cherrytomater\" },\n      { name: \"Løg\", amount: \"2 stk.\" },\n      { name: \"Hvidløg\", amount: \"3 fed\" },\n      { name: \"Paprika\", amount: \"2 tsk.\" },\n      { name: \"Squash\", amount: \"1 stk.\" },\n      { name: \"Rød peberfrugt\", amount: \"1 stk.\" },\n      { name: \"Olivenolie\", amount: \"2 spsk.\" }\n    ],\n    instructions: [\n      \"Forvarm ovnen til 200 grader.\",\n      \"Skær løg, squash og peberfrugt i mindre stykker.\",\n      \"Halvér cherrytomaterne, og hak hvidløget.\",\n      \"Vend grøntsager og kikærter med olivenolie og paprika.\",\n      \"Fordel blandingen på en bageplade.\",\n      \"Bag retten i cirka 30 minutter, indtil grøntsagerne er møre.\"\n    ]\n  }\n];\n\nreturn recipes.map(recipe => ({ json: recipe }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e72e5b83-4141-4908-b46b-436e0252da5e",
+      "name": "Recipe Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst output = [];\n\nfor (const item of $input.all()) {\n  const r = item.json;\n\n  const ingredients = r.ingredients\n    .map(i => `${i.name}: ${i.amount}`)\n    .join(\", \");\n\n  const instructions = r.instructions\n    .map((step, index) => `${index + 1}. ${step}`)\n    .join(\" \");\n\n  const chunks = [\n    `${r.name}. ${r.description} Kategori: ${r.category}. Ingredienser: ${ingredients}.`,\n    `${r.name}. Tilberedning: ${instructions}`\n  ];\n\n  chunks.forEach((text, index) => {\n    output.push({\n      json: {\n        ...r,\n        chunkIndex: index,\n        chunkId: `${r.name.toLowerCase().replace(/[^a-z0-9]+/g, \"-\")}-${index}`,\n        text\n      }\n    });\n  });\n}\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "6eab1550-c409-42bc-9d17-b1094cacc91c",
+      "name": "Split Into Chunks"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/embed",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"nomic-embed-text\",\n  \"input\": \"{{ $json.text }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "2a022ab3-7a90-4cb3-8dfe-5dec1ccc12d2",
+      "name": "HTTP Request - Ollama Embeddings"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/neo4j/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\nJSON.stringify({\n  \"statement\": \"MERGE (r:Recipe {name: $recipeName}) SET r.description = $description, r.prepTime = $prepTime, r.servings = $servings MERGE (c:Category {name: $category}) MERGE (r)-[:BELONGS_TO]->(c) WITH r UNWIND $ingredients AS ingredientData MERGE (i:Ingredient {name: ingredientData.name}) MERGE (r)-[:CONTAINS]->(i) WITH DISTINCT r MERGE (ch:Chunk {id: $chunkId}) SET ch.recipeName = $recipeName, ch.chunkIndex = $chunkIndex, ch.text = $text, ch.embedding = $embedding MERGE (r)-[:HAS_CHUNK]->(ch) RETURN r.name AS recipe, ch.id AS chunkId\",\n  \"parameters\": {\n    \"recipeName\": $node[\"Split Into Chunks\"].json.name,\n    \"description\": $node[\"Split Into Chunks\"].json.description,\n    \"prepTime\": Number($node[\"Split Into Chunks\"].json.prepTime),\n    \"servings\": Number($node[\"Split Into Chunks\"].json.servings),\n    \"category\": $node[\"Split Into Chunks\"].json.category,\n    \"ingredients\": $node[\"Split Into Chunks\"].json.ingredients,\n    \"chunkId\": $node[\"Split Into Chunks\"].json.chunkId,\n    \"chunkIndex\": Number($node[\"Split Into Chunks\"].json.chunkIndex),\n    \"text\": $node[\"Split Into Chunks\"].json.text,\n    \"embedding\": $json.embeddings[0]\n  }\n})\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        896,
+        0
+      ],
+      "id": "0013f2f6-3188-4158-8912-e87e4963140e",
+      "name": "HTTP Request - Neo4j",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "neWwpHfj39OAYLE5",
+          "name": "Neo4j Opskrifter"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Recipe Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recipe Data": {
+      "main": [
+        [
+          {
+            "node": "Split Into Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Into Chunks": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Ollama Embeddings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Ollama Embeddings": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Neo4j",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c52df45a-f412-403b-98be-4fb44d484d5b",
+  "meta": {
+    "instanceId": "916ac3a88594e58f8171e19d990906dac60bc2023cadac5ac404df0bce09df73"
+  },
+  "nodeGroups": [],
+  "id": "iZyIJ6Ms9MYJlQ2i",
+  "tags": []
+}
